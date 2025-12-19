@@ -1,67 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookHaven - Shopping Cart</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-content">
-        <div class="nav-brand">📚 BookHaven</div>
-        <div class="nav-links">
-          <a href="home.html">Home</a>
-          <a href="catalogue.html">Catalogue</a>
-          <a href="cart.html" class="cart-badge">
-            Cart <span class="cart-count">0</span>
-          </a>
-          <button class="logout-btn" onclick="location.href='index.html'">
-            Logout
-          </button>
-        </div>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookHaven - Cart</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
 
-    <div class="container">
-      <div class="cart-container">
-        <h2>Shopping Cart</h2>
-        <div id="cartItems"></div>
-
-        <div class="cart-summary" id="cartSummary"></div>
-
-        <button
-          class="btn"
-          onclick="location.href='payment.html'"
-          style="margin-top: 20px"
-        >
-          Proceed to Payment
-        </button>
-      </div>
+<nav class="navbar">
+  <div class="nav-content">
+    <div class="nav-brand">📚 BookHaven</div>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="catalogue.html">Catalogue</a>
+      <a href="cart.html">Cart (<span class="cart-count">0</span>)</a>
     </div>
+  </div>
+</nav>
 
-    <script>
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+<div class="container">
+  <h2>Shopping Cart</h2>
+  <div id="cartItems"></div>
+  <div id="cartSummary"></div>
+</div>
 
-      function updateCartCount() {
-        document.querySelector(".cart-count").textContent = cart.length;
-      }
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      function saveCart() {
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
+  function updateCartCount() {
+    document.querySelector(".cart-count").textContent = cart.length;
+  }
 
-      function removeFromCart(title) {
-        cart = cart.filter(item => item.title !== title);
-        saveCart();
-        renderCart();
-      }
+  function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
-      // ✅ Convert price safely to number
-      function getNumericPrice(price) {
-        return Number(price.toString().replace(/[^0-9.]/g, ""));
-      }
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+  }
 
-      function renderCart() {
-        const cartItemsDiv = document.getElementById("cartItems");
+  function renderCart() {
+    const cartItemsDiv = document.getElementById("cartItems");
+    const cartSummaryDiv = document.getElementById("cartSummary");
+
+    cartItemsDiv.innerHTML = "";
+    cartSummaryDiv.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
+      updateCartCount();
+      return;
+    }
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price;
+
+      cartItemsDiv.innerHTML += `
+        <div class="cart-item">
+          <strong>${item.title}</strong>
+          <span>₹${item.price}</span>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        </div>
+      `;
+    });
+
+    cartSummaryDiv.innerHTML = `
+      <h3>Total Amount: ₹${total}</h3>
+    `;
+
+    updateCartCount();
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>
+
 
