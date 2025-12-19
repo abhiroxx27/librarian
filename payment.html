@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookHaven - Payment</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-content">
+        <div class="nav-brand">📚 BookHaven</div>
+        <div class="nav-links">
+          <a href="home.html">Home</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="cart.html" class="cart-badge">
+            Cart <span class="cart-count">0</span>
+          </a>
+          <button class="logout-btn" onclick="location.href='index.html'">
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="payment-container">
+        <h2>Complete Your Order</h2>
+        <div class="order-summary" id="orderSummary">
+          <h3>Order Summary</h3>
+          <div class="order-item">
+            <span>The Midnight Library</span><span>₹499</span>
+          </div>
+          <div
+            class="order-item"
+            style="
+              margin-top: 10px;
+              padding-top: 10px;
+              border-top: 1px solid #ddd;
+            "
+          >
+            <span>Shipping</span><span>₹50</span>
+          </div>
+          <div
+            class="order-item"
+            style="font-weight: bold; font-size: 18px; color: #667eea"
+          >
+            <span>Total</span><span>₹549</span>
+          </div>
+        </div>
+        <div class="payment-methods">
+          <h3>Select Payment Method</h3>
+          <div class="payment-method selected" onclick="selectPayment(this)">
+            <strong>💳 Credit/Debit Card</strong>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <strong>📱 UPI Payment</strong>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <strong>🏦 Net Banking</strong>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <strong>💵 Cash on Delivery</strong>
+          </div>
+        </div>
+        <button class="complete-order-btn" onclick="completeOrder()">
+          Place Order
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function selectPayment(element) {
+        document.querySelectorAll(".payment-method").forEach((method) => {
+          method.classList.remove("selected");
+        });
+        element.classList.add("selected");
+      }
+
+      function completeOrder() {
+        alert(
+          "Order placed successfully! Thank you for shopping with BookHaven."
+        );
+        // Clear cart and redirect to home in a real application
+        location.href = "home.html";
+      }
+    </script>
+  </body>
+</html>

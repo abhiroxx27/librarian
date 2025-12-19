@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookHaven - Catalogue</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-content">
+        <div class="nav-brand">📚 BookHaven</div>
+        <div class="nav-links">
+          <a href="home.html">Home</a>
+          <a href="catalogue.html">Catalogue</a>
+          <a href="cart.html" class="cart-badge">
+            Cart <span class="cart-count">0</span>
+          </a>
+          <button class="logout-btn" onclick="location.href='index.html'">
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="catalogue-header">
+        <h2>Book Catalogue</h2>
+        <p>Explore our collection of amazing books</p>
+      </div>
+
+      <!-- Books Grid -->
+      <div class="books-grid" id="booksGrid">
+        <div class="book-card">
+          <div class="book-cover">📖</div>
+          <div class="book-info">
+            <div class="book-title">The Midnight Library</div>
+            <div class="book-author">by Matt Haig</div>
+            <div class="book-price">₹499</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">⚡</div>
+          <div class="book-info">
+            <div class="book-title">Atomic Habits</div>
+            <div class="book-author">by James Clear</div>
+            <div class="book-price">₹599</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">🧠</div>
+          <div class="book-info">
+            <div class="book-title">Deep Work</div>
+            <div class="book-author">by Cal Newport</div>
+            <div class="book-price">₹549</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">🔥</div>
+          <div class="book-info">
+            <div class="book-title">Rich Dad Poor Dad</div>
+            <div class="book-author">by Robert Kiyosaki</div>
+            <div class="book-price">₹399</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">🚀</div>
+          <div class="book-info">
+            <div class="book-title">Think Like a Monk</div>
+            <div class="book-author">by Jay Shetty</div>
+            <div class="book-price">₹499</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">💡</div>
+          <div class="book-info">
+            <div class="book-title">The Psychology of Money</div>
+            <div class="book-author">by Morgan Housel</div>
+            <div class="book-price">₹450</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">📘</div>
+          <div class="book-info">
+            <div class="book-title">Ikigai</div>
+            <div class="book-author">by Hector Garcia</div>
+            <div class="book-price">₹349</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">🧩</div>
+          <div class="book-info">
+            <div class="book-title">The Alchemist</div>
+            <div class="book-author">by Paulo Coelho</div>
+            <div class="book-price">₹299</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">📊</div>
+          <div class="book-info">
+            <div class="book-title">Zero to One</div>
+            <div class="book-author">by Peter Thiel</div>
+            <div class="book-price">₹499</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">🎯</div>
+          <div class="book-info">
+            <div class="book-title">Can't Hurt Me</div>
+            <div class="book-author">by David Goggins</div>
+            <div class="book-price">₹599</div>
+            <button class="add-to-cart-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Script -->
+    <script>
+      // Load cart from localStorage
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Update cart count in navbar
+      function updateCartCount() {
+        document.querySelector(".cart-count").textContent = cart.length;
+      }
+
+      // Save cart to localStorage
+      function saveCart() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      // Add book to cart
+      function addToCart(bookTitle, bookPrice) {
+        cart.push({ title: bookTitle, price: bookPrice });
+        saveCart();
+        updateCartCount();
+      }
+
+      // Remove book from cart
+      function removeFromCart(bookTitle) {
+        const index = cart.findIndex(item => item.title === bookTitle);
+        if (index !== -1) {
+          cart.splice(index, 1);
+          saveCart();
+          updateCartCount();
+        }
+      }
+
+      // Attach event listeners to buttons
+      document.querySelectorAll(".add-to-cart-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          const bookCard = button.closest(".book-card");
+          const title = bookCard.querySelector(".book-title").textContent;
+          const price = bookCard.querySelector(".book-price").textContent;
+
+          if (button.classList.contains("remove-btn")) {
+            // Remove from cart
+            removeFromCart(title);
+            button.textContent = "Add to Cart";
+            button.classList.remove("remove-btn");
+          } else {
+            // Add to cart
+            addToCart(title, price);
+            button.textContent = "Remove from Cart";
+            button.classList.add("remove-btn");
+          }
+        });
+      });
+
+      // Initialize cart count on page load
+      updateCartCount();
+    </script>
+  </body>
+</html>

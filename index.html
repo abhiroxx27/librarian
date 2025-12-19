@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookHaven - Sign In</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loginPage" class="page active">
+      <div class="login-container">
+        <div class="login-box">
+          <div class="logo">
+            <h1>📚 BookHaven</h1>
+            <p>Your gateway to endless stories</p>
+          </div>
+          <div id="loginForm">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #333">
+              Welcome Back
+            </h2>
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input
+                type="email"
+                id="loginEmail"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+              />
+            </div>
+            <button class="btn" onclick="location.href='home.html'">
+              Sign In
+            </button>
+            <div class="toggle-form">
+              Don't have an account?
+              <a href="#" onclick="toggleForm()">Register</a>
+            </div>
+          </div>
+          <div id="registerForm" style="display: none">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #333">
+              Create Account
+            </h2>
+            <div class="form-group">
+              <label for="registerName">Full Name</label>
+              <input
+                type="text"
+                id="registerName"
+                placeholder="Enter your name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="registerEmail">Email</label>
+              <input
+                type="email"
+                id="registerEmail"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="registerPassword">Password</label>
+              <input
+                type="password"
+                id="registerPassword"
+                placeholder="Create a password"
+              />
+            </div>
+            <button class="btn" onclick="location.href='home.html'">
+              Create Account
+            </button>
+            <div class="toggle-form">
+              Already have an account?
+              <a href="#" onclick="toggleForm()">Sign In</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Client-side JS for toggling between login and register forms
+      function toggleForm() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        if (loginForm.style.display === "none") {
+          loginForm.style.display = "block";
+          registerForm.style.display = "none";
+        } else {
+          loginForm.style.display = "none";
+          registerForm.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>
