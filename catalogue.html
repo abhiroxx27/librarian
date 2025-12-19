@@ -24,6 +24,18 @@
 
   <div class="book-list">
     <div class="book-card">
+      <h3>Atomic Habits</h3>
+      <p>Price: ₹599</p>
+      <button onclick="addToCart('Atomic Habits', 599)">Add to Cart</button>
+    </div>
+
+    <div class="book-card">
+      <h3>Deep Work</h3>
+      <p>Price: ₹549</p>
+      <button onclick="addToCart('Deep Work', 549)">Add to Cart</button>
+    </div>
+
+    <div class="book-card">
       <h3>Java Programming</h3>
       <p>Price: ₹300</p>
       <button onclick="addToCart('Java Programming', 300)">Add to Cart</button>
@@ -34,16 +46,11 @@
       <p>Price: ₹250</p>
       <button onclick="addToCart('Python Basics', 250)">Add to Cart</button>
     </div>
-
-    <div class="book-card">
-      <h3>Web Development</h3>
-      <p>Price: ₹400</p>
-      <button onclick="addToCart('Web Development', 400)">Add to Cart</button>
-    </div>
   </div>
 </div>
 
 <script>
+  // Load existing cart or start fresh
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   function updateCartCount() {
@@ -53,9 +60,8 @@
   function addToCart(title, price) {
     cart.push({
       title: title,
-      price: price   // ✅ Store price as NUMBER
+      price: price   // store as number
     });
-
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
     alert("Book added to cart!");
