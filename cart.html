@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BookHaven - Cart</title>
+  <title>BookHaven - Shopping Cart</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -26,6 +26,7 @@
 </div>
 
 <script>
+  // load cart
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   function updateCartCount() {
@@ -36,10 +37,19 @@
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 
+  // remove by index for simplicity
   function removeFromCart(index) {
     cart.splice(index, 1);
     saveCart();
     renderCart();
+  }
+
+  // helper: safely turn a price into a number even if it's a string like "₹599"
+  function getNumericPrice(raw) {
+    // remove anything that is not digit or dot, then parse
+    const cleaned = raw.toString().replace(/[^0-9.]/g, "");
+    const num = Number(cleaned);
+    return isNaN(num) ? 0 : num;
   }
 
   function renderCart() {
@@ -57,18 +67,33 @@
 
     let total = 0;
 
+    // build item entries
     cart.forEach((item, index) => {
-      total += item.price;
+      const price = getNumericPrice(item.price);
+      total += price;
 
-      cartItemsDiv.innerHTML += `
-        <div class="cart-item">
-          <strong>${item.title}</strong>
-          <span>₹${item.price}</span>
-          <button onclick="removeFromCart(${index})">Remove</button>
+      // create a container for this item
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("cart-item");
+
+      // inner content
+      itemDiv.innerHTML = `
+        <div class="cart-item-info">
+          <span class="cart-item-title">${item.title}</span>
         </div>
+        <div class="cart-item-price">₹${price}</div>
+        <button class="remove-btn">Remove</button>
       `;
+
+      // attach remove handler
+      itemDiv.querySelector(".remove-btn").addEventListener("click", () => {
+        removeFromCart(index);
+      });
+
+      cartItemsDiv.appendChild(itemDiv);
     });
 
+    // summary with clean total
     cartSummaryDiv.innerHTML = `
       <h3>Total Amount: ₹${total}</h3>
     `;
@@ -81,5 +106,6 @@
 
 </body>
 </html>
+
 
 
