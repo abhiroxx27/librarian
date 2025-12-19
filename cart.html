@@ -57,56 +57,11 @@
         renderCart();
       }
 
-      function renderCart() {
-        const cartItemsDiv = document.getElementById("cartItems");
-        const cartSummaryDiv = document.getElementById("cartSummary");
-
-        cartItemsDiv.innerHTML = "";
-        cartSummaryDiv.innerHTML = "";
-
-        if (cart.length === 0) {
-          cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
-          updateCartCount();
-          return;
-        }
-
-        let total = 0;
-
-        cart.forEach(item => {
-          const price = Number(item.price); // ✅ FIX HERE
-          total += price;
-
-          const cartItem = document.createElement("div");
-          cartItem.classList.add("cart-item");
-          cartItem.innerHTML = `
-            <div class="cart-item-cover">📘</div>
-            <div class="cart-item-info">
-              <div class="cart-item-title">${item.title}</div>
-            </div>
-            <div class="cart-item-price">₹${price}</div>
-            <button class="remove-btn">Remove</button>
-          `;
-
-          cartItem
-            .querySelector(".remove-btn")
-            .addEventListener("click", () => {
-              removeFromCart(item.title);
-            });
-
-          cartItemsDiv.appendChild(cartItem);
-        });
-
-        cartSummaryDiv.innerHTML = `
-          <div class="summary-row total">
-            <strong>Total:</strong>
-            <strong>₹${total}</strong>
-          </div>
-        `;
-
-        updateCartCount();
+      // ✅ Convert price safely to number
+      function getNumericPrice(price) {
+        return Number(price.toString().replace(/[^0-9.]/g, ""));
       }
 
-      renderCart();
-    </script>
-  </body>
-</html>
+      function renderCart() {
+        const cartItemsDiv = document.getElementById("cartItems");
+
